@@ -18,7 +18,7 @@ const App: FC = () => {
     setCountries(response);
   };
 
-  const handleChange = (code: any) => {
+  const handleChange = (code: string) => {
     setcountryCode(code);
   }
 

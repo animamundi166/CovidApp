@@ -20,7 +20,7 @@ export interface IBaseGetSummary {
 }
 
 const getSummary = async (): Promise<IBaseGetSummary> => {
-  const response = await axios.get<IBaseGetSummary>(`https://api.covid19api.com/summary`);
+  const response = await axios.get<IBaseGetSummary>('https://api.covid19api.com/summary');
   return response.data;
 };
 
