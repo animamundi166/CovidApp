@@ -17,6 +17,9 @@ const countriesReducer = createReducer(initialState, (builder) => {
   builder.addCase(getAllCountries.fulfilled, (state, action) => {
     state.countries = action.payload;
   });
+  builder.addCase(getAllCountries.rejected, (state) => {
+    state.countries = null;
+  });
 });
 
 export default countriesReducer;

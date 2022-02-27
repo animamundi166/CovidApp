@@ -17,6 +17,9 @@ const infoReducer = createReducer(initialState, (builder) => {
   builder.addCase(getInfo.fulfilled, (state, action) => {
     state.countryInfo = action.payload;
   });
+  builder.addCase(getInfo.rejected, (state) => {
+    state.countryInfo = null;
+  });
 });
 
 export default infoReducer;
