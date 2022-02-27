@@ -4,3 +4,4 @@ Used libraries:
 - ant design
 - recharts
 - axios
+- redux toolkit

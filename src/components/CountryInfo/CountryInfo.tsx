@@ -1,23 +1,22 @@
 import { FC, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import getCountryInfo, { ICountryInfo } from "../../api/getCountryInfo";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 import { PageHeader, Radio, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import style from './CountryInfo.module.scss';
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { getInfo } from "../../store/info";
 
 
 const CountryInfo: FC = () => {
-  const [countryInfo, setCountryInfo] = useState<ICountryInfo[] | null>(null);
-  const [statValue, setStatValue] = useState("Active");
   const { countryCode } = useParams();
-  const navigate = useNavigate();
 
-  const fetchCountryInfo = async () => {
-    setCountryInfo(null);
-    const newCountryInfo = await getCountryInfo(countryCode!);
-    setCountryInfo(newCountryInfo);
-  };
+  const dispatch = useDispatch();
+  const { countryInfo } = useSelector((state: RootState) => state.сountryInfo);
+
+  const [statValue, setStatValue] = useState("Active");
+  const navigate = useNavigate();
 
   const onChange = (event: any) => {
     setStatValue(event.target.value);
@@ -28,11 +27,12 @@ const CountryInfo: FC = () => {
   };
 
   useEffect(() => {
-    fetchCountryInfo();
+    dispatch(getInfo(countryCode!));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countryCode]);
 
   const countryCodelowCase = countryCode!.toLowerCase();
+
 
   return (
     <>
@@ -76,7 +76,6 @@ const CountryInfo: FC = () => {
               <Legend />
               <Area type="monotone" dataKey={statValue} stackId="1" stroke="#FF0000" fill="#FF2A00" />
             </AreaChart>
-
           </div>
         </div>
       )}

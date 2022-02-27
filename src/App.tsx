@@ -1,22 +1,22 @@
 import { FC, useEffect, useState } from 'react';
-import getSummary, { IBaseGetSummary } from './api/getSummary';
 import { useNavigate } from 'react-router-dom';
 import style from './App.module.scss';
 import { Select, Button, Spin, message, Statistic, Divider, Tabs } from 'antd';
 import { LoadingOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from './store/store';
+import { getAllCountries } from './store/summary';
 
 const App: FC = () => {
-  const [countries, setCountries] = useState<IBaseGetSummary | null>(null);
+  const dispatch = useDispatch();
+  const { countries } = useSelector((state: RootState) => state.allCountries);
+
   const [countryCode, setcountryCode] = useState('');
   const navigate = useNavigate();
+
   const { Option } = Select;
   const { TabPane } = Tabs;
-
-  const fetchSummary = async () => {
-    const response = await getSummary();
-    setCountries(response);
-  };
 
   const handleChange = (code: string) => {
     setcountryCode(code);
@@ -33,8 +33,10 @@ const App: FC = () => {
   }
 
   useEffect(() => {
-    fetchSummary();
+    dispatch(getAllCountries());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   return (
     <div className={style.main}>

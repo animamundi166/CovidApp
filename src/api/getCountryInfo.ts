@@ -17,7 +17,6 @@ const getCountryInfo = async (countryCode: string): Promise<ICountryInfo[]> => {
     Deaths: item.Deaths,
     Active: item.Active,
     Date: item.Date.substring(0, 10).split("-").reverse().join("."),
-
   }))
 };
 
